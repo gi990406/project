@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>KI 블로그 목록</title>
+</head>
+<body>
+  <h2>[ KI Blog 목록 ]</h2>
+  <table>
+      <!-- 글 내용 -->
+      <tr th:each="blog : ${list}">
+          <td>
+              <img th:src="@{'/images/' + ${blog.photo} + '.png'}" alt="프로필사진" width="50px;" height="50px;">
+              <a th:href="@{/blog/read(blogid=${blog.blogid})}" th:text="|${blog.blogername} (${blog.blogid})님의 블로그 보러가기|"></a>
+          </td>
+      </tr>
+  </table>
+</body>
+</html>

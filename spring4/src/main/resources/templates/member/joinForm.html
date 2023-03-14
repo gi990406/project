@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+  <h2> [ 회원가입 ] </h2>
+  <form action="join" method="post">
+    <label>
+      아이디: <input type="text" name="usrid" required>
+    </label>
+    <br><br>
+
+    <label>
+      비밀번호 : <input type="password" name="usrpwd" required>
+    </label>
+    <br><br>
+
+    <label for="usrpwd2"> 비밀번호 확인 : </label>
+      <input type="password" id="usrpwd2" required>
+    <br><br>
+
+    <label>
+      이름 : <input type="text" name="usrname" required>
+    </label>
+    <br><br>
+
+    <label for="gender"><span class="label">성별 : </span>
+      <input type="radio" name="gender" value="남성"> 남성
+      <input type="radio" name="gender" value="여성"> 여성
+    </label>
+    <br><br>
+
+    <label for="birthyear"></label>
+    <select id="birthyear" name="birthyear">
+      <option value="1999">1999</option>
+      <option value="1998">1998</option>
+      <option value="1997">1997</option>
+      <option value="1996">1996</option>
+      <option value="1995">1995</option>
+    </select>
+    <br><br>
+
+    <label for="hobby"><span class="label">취미 : </span>
+      <input type="checkbox" name="hobby" value="등산"> 등산
+      <input type="checkbox" name="hobby" value="수영"> 수영
+      <input type="checkbox" name="hobby" value="낚시"> 낚시
+    </label>
+    <br><br>
+
+    <label for="introduce">자기소개</label>
+    <textarea name="introduce" cols="40" rows="10"></textarea>
+    <br><br>
+
+    <input type="submit" value="가입">
+    <input type="reset" value="초기화">
+
+  </form>
+</body>
+</html>

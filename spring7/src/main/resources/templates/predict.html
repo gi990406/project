@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>분류 예측</title>
+  <style>
+    li {
+      height: 40px;
+    }
+    label {
+      display: inline-block;
+      width: 300px;
+    }
+  </style>
+  <script th:inline="javascript" th:src="@{/script/jquery-3.6.3.min.js}"></script>
+  <script>
+    $(function () {
+      $("#btn").on('click', predict)
+    })
+    function predict() {
+      let petalLength = $("#petalLength").val();
+      let petalWidth = $("#petalWidth").val();
+      let sepalLength = $("#sepalLength").val();
+      let sepalWidth = $("#sepalWidth").val();
+
+      let sendData = {
+        "petalLength" : petalLength,
+        "petalWidth" : petalWidth,
+        "sepalLength" : sepalLength,
+        "sepalWidth" : sepalWidth
+      }
+      // alert(JSON.stringify(sendData));
+      $.ajax({
+        method : 'POST'
+        , url : 'predict'
+        , data : sendData
+        , success : function (resp) { // resp = {"predict_result" : "setosa"}
+          $('#result').css("color", "red");
+          $("#result").text(resp["predict_result"])
+        }
+      })
+    }
+  </script>
+</head>
+<body>
+  <h2>[ 붓꽃(Iris) 품종 분류 ]</h2>
+
+  <p>
+    <img th:src="@{/images/iris.jpeg}" style="width: 200px;" alt="">
+  </p>
+  <form>
+    <ul>
+      <li>
+        <label for="petalLength">꽃잎(Petal)의 길이(petal length)</label>
+        <input type="text" id="petalLength" name="petalLength">
+      </li>
+      <li>
+        <label for="petalWidth">꽃잎(Petal)의 넓이(petal width)</label>
+        <input type="text" id="petalWidth" name="petalWidth">
+      </li>
+      <li>
+        <label for="sepalLength">꽃받침(Sepal)의 길이(sepal length)</label>
+        <input type="text" id="sepalLength" name="sepalLength">
+      </li>
+      <li>
+        <label for="sepalWidth">꽃받침(Sepal)의 넓이(sepal width)</label>
+        <input type="text" id="sepalWidth" name="sepalWidth">
+      </li>
+      <li>
+        <input type="button" id="btn" value="분류하기">
+      </li>
+    </ul>
+  </form>
+<h3>분류 결과 : <span id="result"></span></h3>
+</body>
+</html>

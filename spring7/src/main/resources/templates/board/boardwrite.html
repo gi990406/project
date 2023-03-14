@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시글 쓰기</title>
+</head>
+<body>
+<h2>[ 게시글 쓰기 ]</h2>
+<p><a th:href="@{/}"><img th:src="@{/images/home.png}" style="width:30px"></a></p>
+
+<form th:action="@{/board/boardwrite}" method="POST" enctype="multipart/form-data" >
+<table border="1">
+	<tr>
+		<th>작성자</th>
+		<td><input type="text" name="memberid" th:value="${#authentication.name}" readonly></td>
+	</tr>
+	<tr>
+		<th>글제목</th>
+		<td style="width:250px;"><input type="text" name="title" required></td>
+	</tr>
+	<tr>
+		<th>글내용</th>
+		<td style="width:600px;"><textarea name="boardtext" required rows="7" cols="80"></textarea></td>
+	</tr>
+	<tr>
+		<th>첨부파일</th>
+		<td><input type="file" name="upload"></td>
+	</tr>
+	<tr>
+		<th colspan="2">
+			<input type="submit" value="글등록">
+			<input type="reset" value="초기화">
+		</th>
+	</tr>
+</table>
+</form>
+</body>
+</html>

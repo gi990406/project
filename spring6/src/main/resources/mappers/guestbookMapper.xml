@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.spring6.dao.GuestbookDAO">
+    <!--insert, update, delete는 리턴하는 것을 명시하지 않는다.-->
+    <insert id="insertGuestbook" parameterType="Guestbook">
+        insert into guestbook (seq, writer, text)
+        VALUES (
+        guestbook_seq.NEXTVAL, #{writer}, #{text})
+    </insert>
+
+    <select id="selectAll" resultType="Guestbook">
+        SELECT seq, writer, text, to_char(regdate, 'YYYY/MM/DD hh:mm') as REGDATE
+        from guestbook
+        order by seq desc
+    </select>
+    <!--select * from guestbook order by seq desc-->
+
+    <delete id="deleteGuestbook" parameterType="int">
+        delete guestbook where seq = #{seq}
+    </delete>
+
+    <select id="selectOne" parameterType="int" resultType="Guestbook">
+        SELECT seq, writer, text, to_char(regdate, 'YYYY/MM/DD hh:mm') as REGDATE
+        from guestbook
+        where seq = #{seq}
+    </select>
+
+    <update id="updateGuestbook" parameterType="int">
+        update guestbook set writer = #{writer}, text = #{text}
+        where seq = #{seq}
+
+    </update>
+
+</mapper>

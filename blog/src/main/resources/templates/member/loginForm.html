@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인</title>
+</head>
+<body>
+<h2>[ 로그인 ]</h2>
+
+<div th:if="${param.error}" style="color:red;font-size:9px;">ID나 비밀번호가 잘못되었습니다.</div>
+<form th:action="@{/member/login}" method="POST">
+  <table border="1">
+    <tr>
+      <th>아이디</th>
+      <td><input type="text" name="blogid" placeholder="아이디를 3~10자 입력하세요.">
+    </tr>
+
+    <tr>
+      <th>비밀번호</th>
+      <td><input type="password" name="blogpwd" placeholder="비밀번호를 3~10자 입력하세요.">
+    </tr>
+    <tr>
+      <th colspan="2">
+        <input type="submit" value="로그인">
+      </th>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<script th:inline="javascript" th:src="@{/script/member.js}"></script>
+<script th:inline="javascript" th:src="@{/script/jquery-3.6.3.min.js}"></script>
+<script th:inline="javascript" th:src="@{/script/memidcheck.js}"></script>
+</head>
+<body>
+	<header>
+	<h2>[회원 가입]</h2>
+	</header>
+	
+	<section>
+	<form th:action="@{/member/join}" method="POST" onsubmit="return validation();">
+		<table border="1">
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input type="text" id="memberid" name="memberid" placeholder="아이디를 3~6자 사이로 입력">
+					<span id="checkResult"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<input type="password" id="mempwd1" name="memberpwd" placeholder="비밀번호를 3~6자 사이로 입력">
+				</td>
+			</tr>		
+			<tr>
+				<th>비밀번호 확인</th>
+				<td>
+					<input type="password" id="mempwd2"  placeholder="비밀번호 다시 입력">
+				</td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td>
+					<input type="text" id="membername" name="membername" placeholder="이름을 입력">
+				</td>
+			</tr>		
+			<tr>
+				<th>이메일</th>
+				<td>
+					<input type="email" id="email" name="email" placeholder="Email을 입력">
+				</td>
+			</tr>	
+			<tr>
+				<th>전화번호</th>
+				<td>
+					<input type="text" name="phone" placeholder="전화번호 입력">
+				</td>
+			</tr>	
+			<tr>
+				<th>주소</th>
+				<td>
+					<input type="text" name="address" placeholder="거주지 주소를 입력">
+				</td>
+			</tr>	
+			<tr>
+				<th colspan="2">
+					<input type="submit" value="가입">
+					<input type="reset"  value="다시 입력">
+				</th>
+			</tr>	
+		</table>
+	</form>
+	</section>
+</body>
+</html>
+

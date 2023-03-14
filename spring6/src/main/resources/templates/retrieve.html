@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>방명록 조회</title>
+  <script>
+    function del(elem) {
+      let seq = elem.getAttribute("data-seq");
+
+      if (confirm("삭제하시겠습니까?")) {
+        let req = "delete?seq=" + seq; // GET
+        location.replace(req);
+        // location.href=req;
+        // alert(req);
+      } else {
+        alert("삭제 작업 취소되었습니다.");
+      }
+    }
+    // 업데이트를 위한 글 하나를 가져오는 동작
+    function update(elem) {
+      let seq = elem.getAttribute("data-seq");
+
+      let req = "update?seq=" + seq; // GET
+      location.replace(req);
+    }
+  </script>
+</head>
+<body>
+  <h2>[ 방명록 목록 ]</h2>
+
+  <form action="update" method="post">
+    <input type="hidden" th:value="${seq}" name="seq">
+    <label for="writer">작성자 : </label>
+    <input type="text" id="writer" name="writer" th:value="${writer}" placeholder="이름을 입력하시오." required>
+
+    <label for="text">내용 : </label>
+    <input type="text" id="text" name="text" th:value="${text}" placeholder="방명록 내용을 입력하시오." required>
+
+    <input type="submit" value="수정완료">
+
+
+  </form>
+
+  <br>
+
+  <table border="1">
+    <tr>
+      <th>순번</th>
+      <th>작성자</th>
+      <th>내용</th>
+      <th>날짜</th>
+      <th>비고</th>
+    </tr>
+
+    <tr th:each="guestbook:${list}">
+      <td th:text="${guestbook.seq}"></td>
+      <td th:text="${guestbook.writer}"></td>
+      <td th:text="${guestbook.text}"></td>
+      <td th:text="${guestbook.regdate}"></td>
+      <td>
+        <input type="button" value="삭제" th:data-seq="${guestbook.seq}" onclick="del(this);">
+        <input type="button" value="수정" th:data-seq="${guestbook.seq}" onclick="update(this);">
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

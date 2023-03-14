@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>타임리프 테스트-1</title>
+</head>
+<body>
+    <h2> [ 타임리프 문법 ] </h2>
+    <h3>** 값 출력 **</h3>
+    <p>[[ ${str} ]]</p>
+    <p>[[ ${num} ]]</p>
+    <p>[[ ${pi} ]]</p>
+    <p>[[ ${tag} ]]</p>
+    <p>[[ ${url} ]]</p>
+    <p>[[ ${p} ]]</p>
+    <p>[[ ${p.name} ]]</p>
+    <p>[[ ${p.phone} ]]</p>
+
+    <h2> ** Tag 인식 ** </h2>
+    <p th:utext="${tag}">써볼까? 확인!</p> <!-- 태그를 태그로 인식-->
+    <p th:text="${tag}"></p> <!-- 태그를 태그로 인식 못함-->
+
+    <hr>
+    <h3>** 타임리프 연산자 **</h3>
+    <!-- 산술 연산자: +, -, *, /, % -->
+    <p th:text="${num + 1}"></p>
+    <p> [[${num+1}]]</p>
+    <p>더하기 결과 : <span th:text="${num + 1}"></span></p> <!-- 더하기 결과 :24 -->
+
+    <p th:text="${num - 5}"></p>
+    <p> [[${num-5}]]</p>
+    <p>빼기 결과 : <span th:text="${num - 5}"></span></p> <!-- 빼기 결과 :28 -->
+
+    <p th:text="${num * 2}"></p>
+    <p> [[${num*2}]]</p>
+    <p>곱셈 결과 : <span th:text="${num * 2}"></span></p> <!-- 곱셈 결과 :46 -->
+
+    <p th:text="${num / 2}"></p>
+    <p> [[${num/2}]]</p>
+    <p>나눗셈 결과 : <span th:text="${num / 2}"></span></p> <!-- 나눗셈 결과 :11 -->
+
+    <p th:text="${num % 2}"></p>
+    <p> [[${num%2}]]</p>
+    <p>나머지 결과 : <span th:text="${num % 2}"></span></p> <!-- 나머지 결과 : 1 -->
+
+    <!-- 비교 연산자 < (lt), > (gt), <=(le), >=(ge), ==(eq), !=(ne) -->
+    <p>[[ ${num gt 0} ]]</p> <!-- num 값이 0을 초과하는 값인가? -->
+    <p th:text="${num > 100}"></p>
+    <p th:text="${num gt 100}"></p>
+    <!-- 논리 연산자 : and, or, not(단항 연산자) -->
+    <p th:text="${num ge 1 and num le 50}"></p> <!-- (1 <= num <= 50) num 변수의 값이 1~50 사이의 값인지 판별 -->
+<!--단항 연산자 : +(부호유지), -(부호 뒤집기), ++, &#45;&#45;, !-->
+<!--이항 연산자 : + - * / %-->
+<!--삼항 연산자 : (bool)? (true일 때 할 동작) : (false일 때)-->
+
+<!--복합 대입 연산자: =, +=, -=, *= ....-->
+<!--&&(and), ||(or), !(not)-->
+
+    <hr>
+    <h3>** 경로 생성과 하이퍼 링크 **</h3>
+    <p><a href="http://naver.com" th:href="'http://nate.com'">네이버로 이동</a></p> <!-- 반드시 '' 안에 URL을 기재해서 문자열 처리를 해야함 -->
+    <p><a href="${url}" th:href="${url}">구글로 이동</a></p>
+
+    <p>경로 : [[ @{/param/view1} ]]</p>
+    <p><a th:href="@{/}">첫 화면으로 이동</a></p>
+    <p><a th:href="@{/param/view1}">view1을 요청(홈페이지 내부)</a></p>
+    <p><img src="" th:src="@{/image/smile.png}" alt="스마일"></a></p>
+
+    <hr>
+    <h3>** 객체 출력하기 **</h3>
+    <p>[[ ${p} ]]</p>
+    <p>[[ ${p.name} ]]</p>
+    <p>[[ ${p.phone} ]]</p>
+
+    <ul th:object="${p}">
+        <li th:text="*{name}">손오공</li>
+        <li th:text="*{phone}">110-2222-333</li>
+    </ul>
+
+    <hr>
+    <!-- 숫자(정수, 실수), 날짜의 포맷팅-->
+    <h3>** 숫자(정수, 실수), 날짜의 포맷팅 **</h3>
+    <p th:text="${inum}"></p>
+    <p th:text="${dnum}"></p>
+    <p th:text="${dnum2}"></p>
+    <p th:text="${date}"></p>
+
+    <p th:text="${#numbers.formatInteger(inum, 10)}"></p>
+    <p th:text="${#numbers.formatInteger(inum, 3, 'COMMA')}"></p>
+    <p th:text="${#numbers.formatDecimal(dnum, 3, 'COMMA', 2, 'POINT')}"></p>
+    <p th:text="${#numbers.formatPercent(dnum2, 0, 2)}"></p>
+
+    <p th:text="${#dates.format(date, 'yyyy/MM/dd HH:mm')}"></p>
+    <p th:text="${#dates.format(date, 'yyyy/MMM/dd hh:mm')}"></p>
+
+    <!-- 문자열 다루기-->
+    <h3>** 문자열 관련 **</h3>
+
+    <!-- th:if는 조건이 참일 경우 inline 내부의 텍스트를 표시-->
+    <p th:text="${str + '짝짝짝!'}"></p>
+    <p th:if="${str.equals('대한민국')}">트루입니다.</p>
+    <p th:if="${not str.equals('대한민국')}">폴스입니다.</p>
+    <!-- 문자열 비교를 equals()가 아닌 연산잘도 가능하다!-->
+    <p th:if="${str == '대한민국'}">==으로 비교해서 true인지 확인 후 true이면 표시</p>
+    <p th:unless="${str == '일본'}">==으로 비교해서 false인지 확인 후 false이면 표시 </p>
+
+    <div th:switch="${num}">
+        <p th:case="10">num은 10입니다.</p>
+        <p th:case="20">num은 20입니다.</p>
+        <p th:case="30">num은 30입니다.</p>
+        <p th:case="*">num은 그 외의 숫자입니다.</p>
+    </div>
+
+    <!--eách를 이용해서 반복-->
+    <ul th:with="data=${#strings.listSplit(values, ',')}">
+        <li th:each="value:${data}"><span th:text="${value}"></span>
+        </li>
+    </ul>
+
+    <!--ArrayList에 저장된 친구의 목록을 반복적으로 출력-->
+    <table border="1">
+        <tr>
+            <th>이름</th>
+            <th>나이</th>
+            <th>전화번호</th>
+            <th>성향</th>
+        </tr>
+
+        <tr th:each="friend:${friendList}">
+            <td th:text="${friend.name}"></td>
+            <td th:text="${friend.age}"></td>
+            <td th:text="${friend.phone}"></td>
+            <td th:text="${friend.active} ?'외향적' : '내성적'"></td>
+        </tr>
+    </table>
+</body>
+</html>

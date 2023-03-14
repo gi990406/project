@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>치킨 예측</title>
+  <style>
+    li {
+      height: 40px;
+    }
+    label {
+      display: inline-block;
+      width: 300px;
+    }
+  </style>
+  <script th:inline="javascript" th:src="@{/script/jquery-3.6.3.min.js}"></script>
+  <script>
+    $(function () {
+      $("#btn").on('click', predict)
+    })
+    function predict() {
+      let rain = $("#rain").val();
+      let coldc = $("#coldc").val();
+      let hotc = $("#hotc").val();
+      let holiday = $("#holiday").val();
+
+      let sendData = {
+        "rain" : rain,
+        "coldc" : coldc,
+        "hotc" : hotc,
+        "holiday" : holiday
+      }
+      // alert(JSON.stringify(sendData));
+      $.ajax({
+        method : 'POST'
+        , url : 'chicken'
+        , data : sendData
+        , success : function (resp) { // resp = {"predict_result" : "setosa"}
+          $('#result').css("color", "red");
+          $("#result").text(resp["predict_result"])
+        }
+      })
+    }
+  </script>
+</head>
+<body>
+<h2>[ 치킨 예측 ]</h2>
+<form>
+  <ul>
+    <li>
+      <label for="rain">강수량</label>
+      <input type="text" id="rain" name="rain">
+    </li>
+    <li>
+      <label for="coldc">최저기온</label>
+      <input type="text" id="coldc" name="coldc">
+    </li>
+    <li>
+      <label for="hotc">최고기온</label>
+      <input type="text" id="hotc" name="hotc">
+    </li>
+    <li>
+      <label for="holiday">요일</label>
+      <input type="text" id="holiday" name="holiday">
+    </li>
+    <li>
+      <input type="button" id="btn" value="분류하기">
+    </li>
+  </ul>
+</form>
+<h3>분류 결과 : <span id="result"></span></h3>
+</body>
+</html>

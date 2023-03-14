@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+header, section {
+    margin: auto;
+    text-align: center;
+}
+
+/* 회원 관련 */
+table{
+    margin: 0 auto;
+}
+tr.hover {
+    background-color: #eee;
+}
+th{
+    width: 100px;
+    height: 30px;
+    background-color: #ccc;
+    font-weight: bolder;
+    text-align: left;
+    padding-left: 10px;
+}
+td{
+    width: 300px;
+    background-color: #ccc;
+    text-align: left;
+    padding: 3px;
+
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymelef.org/extras/spring-security" >
+<head>
+<meta charset="UTF-8">
+<title>게시글 목록</title>
+<style>
+	a{ text-decoration:none;}
+	a:hover{font-weight:bolder;}
+	b { color : red;
+	}
+</style>
+<script>
+	function pageFormSubmit(currentPage) {
+		let form = document.getElementById("pagingForm");
+		let page = document.getElementById("page");
+		page.value = currentPage;
+		form.submit();
+	}
+</script>
+</head>
+<body>
+<h2>[ 게시글 목록 ]</h2>
+	<!-- 검색창 -->
+	<form id="pagingForm" method="GET" th:action="@{/board/boardlist}">
+		<input type="hidden" name="currentPage" id="page" value="">
+		<select name="searchItem">
+			<option value="memberid" th:selected="${searchItem=='memberid'}">글쓴이</option>
+			<option value="title"    th:selected="${searchItem=='title'}">  제목</option>
+			<option value="boardtext" th:selected="${searchItem=='boardtext'}">글내용</option>
+		</select>
+		<input type="text" name="searchWord" th:value="${searchWord}">
+		<input type="button" onclick="pageFormSubmit(1)" value="검색">
+	</form>
+	<br>
+	
+	<!-- 게시글 목록 -->
+	<table border="1">
+		<tr>
+			<th>번호</th>
+			<th style="width:300px;">제목</th>
+			<th>글쓴이</th>
+			<th>조회수</th>
+			<th>작성일</th>
+		</tr>
+		<!-- 글 내용 -->
+		<tr th:each="board, status : ${list}">
+			
+			<td th:text="${status.count-1} + ${navi.startRecord}"></td> 
+			<td>
+			<a th:href="@{/board/read(boardseq=${board.boardseq})}" th:text="${board.title}"></a>
+			
+			<th:block th:if="${board.originalfile != null}">
+				<img th:src="@{/images/clip.png}" alt="첨부파일있음" width="15px;">
+			</th:block>
+			
+			</td>
+			<td th:text="${board.memberid}"></td>
+			<td th:text="${board.hitcount}"></td>
+			<td th:text="${board.regdate}"></td>
+		</tr>
+	</table>
+	<br>
+	<!-- 글쓰기 화면 요청 -->
+	<a sec:authorize="isAuthenticated()" th:href="@{/board/write}">글쓰기</a>
+	
+	<!-- Page Navigation -->
+	<nav>
+	<p> 
+	
+	<!-- 앞 그룹으로 이동하기 -->
+	<th:block th:if="${(navi.startPageGroup) >= 2}">
+		<a th:href="|javascript:pageFormSubmit(${navi.currentPage - navi.pagePerGroup})|">◀◀</a> 
+	</th:block>
+	<th:block th:unless="${(navi.startPageGroup) >= 2}">
+		<span>◀◀</span> 
+	</th:block>
+	
+	<!--앞 페이지로 이동하기 -->
+	<th:block th:if="${(navi.currentPage) >= 2}">
+		<a th:href="|javascript:pageFormSubmit(${navi.currentPage - 1})|">◁</a> 
+	</th:block>
+	<th:block th:unless="${(navi.currentPage) >= 2}">
+		<span>◁</span> 
+	</th:block>
+
+	<span th:each="count:${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+		<th:block th:if="${count == navi.currentPage}">
+			<b th:text="${count}"></b>
+		</th:block>
+		<th:block th:unless="${count == navi.currentPage}">
+			<a th:text="${count}" th:href="|javascript:pageFormSubmit(${count})|"></a>
+		</th:block>
+	</span>
+	
+	<!-- 뒷 페이지로 이동  -->
+	<th:block th:if="${(navi.currentPage) < navi.totalPageCount}">
+		<a th:href="|javascript:pageFormSubmit(${navi.currentPage + 1})|">▷</a> 
+	</th:block>
+	<th:block th:unless="${(navi.currentPage) < navi.totalPageCount}">
+		<span>▷</span> 
+	</th:block>	
+	
+	<!-- 뒷 그룹으로 이동 -->
+	<th:block th:if="${navi.currentGroup < (navi.totalGroupCount-1) }">
+		<a th:href="|javascript:pageFormSubmit(${navi.currentPage + navi.pagePerGroup})|">▶▶</a> 
+	</th:block>
+	<th:block th:unless="${navi.currentGroup < (navi.totalGroupCount-1) }">
+		<span>▶▶</span> 
+	</th:block>
+	</p>
+	</nav>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

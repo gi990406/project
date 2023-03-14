@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.blog.dao.BlogDAO">
+<!-- 글 목록 요청 -->
+<select id="selectBlogList" resultType="Blog" parameterType="map">
+    SELECT * From (
+    SELECT rownum rnum, b.*
+    FROM
+    (
+    SELECT
+    blogseq, blogid, title, blogtext,
+    to_char(regdate, 'YYYY-MM-DD') as regdate, likecnt
+    FROM blog_board
+    WHERE
+    <if test = "searchItem == 'title'">
+        title LIKE '%' || #{searchWord} || '%'
+    </if>
+    <if test="searchItem == 'blogid'">
+        blogid LIKE '%' || #{searchWord} || '%'
+    </if>
+    <if test="searchItem == 'blogtext'">
+        blogtext LIKE '%' || #{searchWord} || '%'
+    </if>
+    ORDER BY blogseq DESC, regdate DESC) b)
+    where rnum between #{srow} and #{erow}
+</select>
+</mapper>

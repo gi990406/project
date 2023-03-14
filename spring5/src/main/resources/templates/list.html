@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>목록 출력</title>
+</head>
+<body>
+<h2>친구 목록</h2>
+    <!---->
+<table border="1">
+    <tr>
+        <th>이름</th>
+        <th>나이</th>
+        <th>전화번호</th>
+        <th>성향</th>
+    </tr>
+
+    <tr th:each="friend:${list}">
+        <td th:text="${friend.name}"></td>
+        <td th:text="${friend.age}"></td>
+        <td th:text="${friend.phone}"></td>
+        <td th:text="${friend.active}"></td>
+    </tr>
+</table>
+</body>
+</html>

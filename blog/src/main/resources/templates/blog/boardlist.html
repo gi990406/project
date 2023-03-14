@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymelef.org/extras/spring-security" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a{ text-decoration:none;}
+        a:hover{font-weight:bolder;}
+        b { color : red;
+        }
+    </style>
+    <script>
+        function pageFormSubmit(currentPage) {
+            let form = document.getElementById("pagingForm");
+            let page = document.getElementById("page");
+            page.value = currentPage;
+            form.submit();
+        }
+    </script>
+</head>
+<body>
+<h2>[ 게시글 목록 ]</h2>
+<!-- 검색창 -->
+<form id="pagingForm" method="GET" th:action="@{/blog/boardlist}">
+    <input type="hidden" name="currentPage" id="page" value="">
+    <select name="searchItem">
+        <option value="blogid" th:selected="${searchItem=='blogid'}">글쓴이</option>
+    </select>
+    <input type="text" name="searchWord" th:value="${searchWord}">
+    <input type="button" onclick="pageFormSubmit(1)" value="검색">
+</form>
+<br>
+<!-- 게시글 목록 -->
+<table border="1">
+    <tr>
+        <th>번호</th>
+        <th style="width:300px;">제목</th>
+        <th>글쓴이</th>
+        <th>조회수</th>
+        <th>작성일</th>
+    </tr>
+    <!-- 글 내용 -->
+    <tr th:each="blog, status : ${list}">
+
+        <td th:text="${status.count-1} + ${navi.startRecord}"></td>
+        <td>
+            <a th:href="@{/board/read(boardseq=${board.boardseq})}" th:text="${blog.title}"></a>
+
+        </td>
+        <td th:text="${blog.blogid}"></td>
+        <td th:text="${blog.likecnt}"></td>
+        <td th:text="${blog.regdate}"></td>
+    </tr>
+</table>
+<br>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymelef.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>글 한 개 조회</title>
+<script th:inline="javascript" th:src="@{/script/jquery-3.6.3.min.js}"></script>
+<script th:inline="javascript" th:src="@{/script/reply.js}"></script>
+
+</head>
+<body>
+<h2>[ 게시글 조회 ]</h2>
+<p><a th:href="@{/}"><img th:src="@{/images/home.png}" style="width:30px"></a></p>
+<input type="hidden" id="contextpath" th:value="${#httpServletRequest.contextPath}">
+<table border="1">
+	<tr>
+		<th>작성자</th>
+		<td><input type="text" name="memberid" th:value="${board.memberid}" readonly></td>
+	</tr>
+	<tr>
+		<th>글제목</th>
+		<td ><p>[[ ${board.title} ]]</p></td>
+	</tr>
+	<tr>
+		<th>글내용</th>
+		<td style="width:600px;height:150px;vertical-align:top"><pre> [[ ${board.boardtext} ]]</pre></td>
+	</tr>
+	<tr>
+		<th>첨부파일</th>
+		<td><a th:href="@{/board/download(boardseq=${board.boardseq})}" th:text="${board.originalfile}"></a> </td>
+	</tr>
+	
+	<th:block th:if="${#authentication.name} == ${board.memberid}">
+	<tr>
+		<th colspan="2">
+			<!-- 글 삭제와 수정은 글쓴사람(board.memberid)과
+			 로그인한 사람(#authentication.name)이 동일할 경우 실시 -->
+			
+			<a th:href="@{/board/delete(boardseq=${board.boardseq})}">글삭제</a> 
+			<a th:href="@{/board/update(boardseq=${board.boardseq})}">글수정</a> 
+		</th>
+	</tr>
+	</th:block>
+</table>
+<br>
+
+<!-- 댓글 처리 영역 -->
+<!-- 댓글 입력 창 -->
+<form th:action="@{/reply/replywrite}" method="POST">
+	<input type="hidden" id="boardseq"  name="boardseq" th:value="${board.boardseq}">
+	<input type="text"   id="replytext" name="replytext">
+	<input type="button" id="replybtn" value="등록">
+</form>
+<br>
+
+<!-- 댓글 출력창 -->
+<span id="loginID" th:text="${#authentication.name}" style="display:none"></span>
+<div id="replyResult"></div>
+</body>
+</html>
+
+
+
+

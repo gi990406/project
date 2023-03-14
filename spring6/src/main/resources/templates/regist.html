@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>방명록 등록</title>
+  <style>
+    label {
+      display: inline-block;
+      width: 80px;
+    }
+    input#content {
+      display: inline-block;
+      width: 700px;
+    }
+  </style>
+</head>
+<body>
+<h2>[ 방명록 등록 ]</h2>
+<form action="regist" method="post">
+  <label for="writer">작성자 : </label>
+  <input type="text" id="writer" name="writer" placeholder="이름을 입력하시오." required><br><br>
+
+  <label for="text">내용 : </label>
+  <input type="text" id="content" name="text" placeholder="방명록 내용을 입력하시오." required><br><br>
+
+  <input type="submit" value="등록">
+  <input type="reset" value="초기화">
+</form>
+</body>
+</html>

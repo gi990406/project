@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- 타임리프 문법을 사용하고 있다는 정보를 입력 -->
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+</head>
+<body>
+  <h2> [ 홈페이지 방문 환영 ] </h2>
+<ul>
+<!--    <th:block th:if="${ session.loginID == true }">-->
+<!--        </th:block>-->
+<!--    <th:block th:unless="${ session.loginID == true }">-->
+<!--    </th:block>-->
+  <li><a href="member/joinForm">회원가입</a> </li>
+
+    <!--session loginID가 없으면-->
+  <li th:if="${session.loginID == null}"><a href="member/loginForm">로그인</a> </li>
+    <!--session loginID가 있으면-->
+  <li th:if="${session.loginID != null}"><a href="member/logout">[[ ${session.usrname}]]([[ ${session.loginID}]])님, 로그아웃</a> </li>
+</ul>
+</body>
+</html>

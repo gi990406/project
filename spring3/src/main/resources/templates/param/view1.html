@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[ Form을 통해 GET 요청 ]</title>
+</head>
+<body>
+    <h2>[ Form을 통해 GET 요청 ]</h2>
+<form action="input2" method="get">
+    <label for="usrid"> 아이디 :
+        <input type="text" name="usrid" id="usrid">
+    </label><br><br>
+    <label for="usrpwd"> 패스워드 :
+        <input type="password" name="usrpwd" id="usrpwd">
+    </label><br><br>
+    <label for="usrname"> 이름 :
+        <input type="text" name="usrname" id="usrname">
+    </label><br><br>
+    <label> 전화번호 :
+        <input type="radio" name="company" value="KT" checked>KT
+        <input type="radio" name="company" value="SKT">SKT
+        <input type="radio" name="company" value="LG">LG
+        <input type="text" name="phone">
+    </label><br><br>
+    <input type="submit" value="전송">
+    <input type="reset" value="초기화">
+</form>
+</body>
+</html>

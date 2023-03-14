@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymelef.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>KI Blog</title>
+</head>
+<body>
+  <h2>[ KI Blog ]</h2>
+    <h3 sec:authorize="isAuthenticated()">([[${#authentication.name}]])님 환영합니다.</h3>
+  <ul>
+      <li sec:authorize="not isAuthenticated()"><a href="#" th:href="@{/member/join}">회원가입</a></li>
+      <li sec:authorize="not isAuthenticated()"><a href="#" th:href="@{/member/loginForm}">로그인</a></li>
+      <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">로그아웃</a></li>
+      <li><a href="#" th:href="@{/member/memberlist}">블로그를 개설한 회원 목록 보기</a></li>
+  </ul>
+</body>
+</html>

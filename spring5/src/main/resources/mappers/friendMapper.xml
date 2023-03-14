@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.spring5.dao.FriendDAO">
+    <!--insert, update, delete는 리턴하는 것을 명시하지 않는다.-->
+    <insert id="insertFriend" parameterType="Friend">
+        insert into friend
+        VALUES (
+        #{name}, #{age}, #{phone}, #{active})
+    </insert>
+
+    <select id="selectAll" resultType="Friend">
+        select * from friend
+    </select>
+</mapper>

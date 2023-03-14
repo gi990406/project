@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.spring7.dao.BoardDAO">
+    <!-- 글 저장 쿼리문-->
+    <insert id="insertBoard" parameterType="Board">
+        INSERT into board
+        (boardseq, memberid, title, boardtext
+        <if test="originalfile != null">
+            , originalfile, savedfile
+        </if>
+        )
+        VALUES
+        (board_seq.NEXTVAL, #{memberid}, #{title}, #{boardtext}
+        <if test="originalfile != null">
+            , #{originalfile}, #{savedfile}
+        </if>
+        )
+    </insert>
+    <!-- 글 목록 요청 -->
+    <select id="selectBoardList" resultType="Board" parameterType="map">
+        SELECT * From (
+        SELECT rownum rnum, b.*
+        FROM
+        (
+        SELECT
+        boardseq, memberid, title, boardtext,
+        to_char(regdate, 'YYYY-MM-DD') as regdate, hitcount, originalfile, savedfile
+        FROM board
+        WHERE
+        <if test = "searchItem == 'title'">
+            title LIKE '%' || #{searchWord} || '%'
+        </if>
+        <if test="searchItem == 'memberid'">
+            memberid LIKE '%' || #{searchWord} || '%'
+        </if>
+        <if test="searchItem == 'boardtext'">
+            boardtext LIKE '%' || #{searchWord} || '%'
+        </if>
+        ORDER BY boardseq DESC, regdate DESC) b)
+        where rnum between #{srow} and #{erow}
+    </select>
+
+    <!-- 글 한개 조회 -->
+    <select id="selectBoard" parameterType="int" resultType="Board">
+        SELECT
+        boardseq, memberid, title, boardtext,
+        to_char(regdate, 'YYYY-MM-DD') as regdate, hitcount, originalfile, savedfile
+        FROM board
+        where boardseq = #{boardseq}
+    </select>
+
+    <delete id="deleteBoard" parameterType="int">
+        delete board where boardseq = #{boardseq}
+    </delete>
+
+    <update id="updateBoard" parameterType="Board">
+        update board set title = #{title}, boardtext = #{boardtext}, regdate = sysdate
+        <if test="originalfile != null">
+            , originalfile = #{originalfile}, savedfile = #{savedfile}
+        </if>
+        <if test="originalfile == null">
+            , originalfile = null, savedfile = null
+        </if>
+        where boardseq = #{boardseq}
+    </update>
+
+    <!-- 글 개수 조회-->
+    <select id="getBoardCount" parameterType="map" resultType="int">
+        select count(*)
+        from board
+        WHERE
+        <if test = "searchItem == 'title'">
+            title LIKE '%' || #{searchWord} || '%'
+        </if>
+        <if test="searchItem == 'memberid'">
+            memberid LIKE '%' || #{searchWord} || '%'
+        </if>
+        <if test="searchItem == 'boardtext'">
+            boardtext LIKE '%' || #{searchWord} || '%'
+        </if>
+        ORDER BY boardseq DESC, regdate DESC
+    </select>
+
+    <update id="updateHitcount" parameterType="int">
+        update board
+        set hitcount = hitcount + 1
+        where boardseq = #{boardseq}
+    </update>
+
+</mapper>

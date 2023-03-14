@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>간단 계산기</title>
+</head>
+<body>
+<h2>[ 간단한 계산기 ]</h2>
+<form action="calc" method="GET">
+    <label>x 값:
+        <input type="text" name="x">
+    </label>
+
+<label>
+    <select name="oper">
+        <option value="+"> + </option>
+        <option value="-"> - </option>
+        <option value="*"> * </option>
+        <option value="/"> / </option>
+    </select>
+</label>
+<label>y 값:
+    <input type="text" name="y">
+</label>
+    <input type="submit" value="계산하기">
+    <input type="reset" value="초기화">
+</form>
+    <!--계산의 결과는 result 변수에 담겨서 올 예정-->
+    <p>결과: [[ ${result} ]]</p>
+</body>
+</html>

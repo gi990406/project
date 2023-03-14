@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.spring7.dao.ReplyDAO">
+    <!-- 댓글 등록 -->
+    <insert id="writeReply" parameterType="Reply">
+        INSERT INTO reply
+        (replyseq, boardseq, memberid, replytext)
+        VALUES
+        (reply_seq.NEXTVAL, #{boardseq}, #{memberid}, #{replytext})
+    </insert>
+
+    <select id="listReply" parameterType="int" resultType="Reply">
+        select replyseq, boardseq, memberid, replytext, to_char(regdate, 'YYYY/MM/DD') as regdate
+        from reply
+        where boardseq = #{boardseq}
+        order by regdate desc
+    </select>
+
+    <delete id="deleteReply" parameterType="int">
+        delete reply
+        where replyseq = #{replyseq}
+    </delete>
+</mapper>
